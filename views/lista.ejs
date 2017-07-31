@@ -1,84 +1,68 @@
+
 <html>
-  <head>
-    <style type="text/css">
-      * {
-        box-sizing: border-box;
-      }
-
-      .fechar {
-          position: absolute;
-          right: 0;
-          top: 0;
-          padding: 12px 16px 12px 16px;
-      }
-
-      .btnTarefa {
-          padding: 10px;
-          width: 25%;
-          background: #d9d9d9;
-          color: #555;
-          text-align: center;
-          font-size: 16px;
-          cursor: pointer;
-          transition: 0.3s;
-      }
-
-      input {
-          width: 30%;
-          padding: 10px;
-          font-size: 16px;
-      }
-
-      ul {
-          margin: 0;
-          padding: 0;
-      }
-
-      ul li {
-          cursor: pointer;
-          position: relative;
-          padding: 12px;
-          font-size: 18px;
-          width: 30%;
-      }
-
-      ul li:nth-child(odd) {
-        background: #F5F5F5;
-      }
-
-      ul li.checked {
-          background: #888;
-          color: #fff;
-          text-decoration: line-through;
-      }
-
-    </style>
-  </head>
-  <body>
-
-    <div id="form" class="header">
-      <h2>To Do List</h2>
-      <input type="text" id="txtTarefa" placeholder="Insira uma tarefa...">
-      <span onclick="novaTarefa()" class="btnTarefa">Adicionar</span>
-    </div>
-
-    <ul id="lista">
-    </ul>
-  </body>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<style type="text/css">
+		  * {
+			box-sizing: border-box;
+		  }
+		  
+		  .btnFechar {
+			  position: absolute;
+			  right: 0;
+			  top: 0;
+			  padding: 12px 16px 12px 16px;
+		  }
+		  
+		ul li {
+			  cursor: pointer;
+			  position: relative;
+			  padding: 12px;
+			  font-size: 18px;
+			  width: 70%;
+		  }
+		  
+		  ul li.checked {
+			  background: #00ba3e;
+			  text-decoration: line-through;
+		  }
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="text-center">
+					<h2>To Do List</h2>
+				</div>
+			</div>
+			<div class="row">
+			  <div class="col-md-offset-3 col-md-6">
+				<input class="form-control input-lg" id="txtTarefa"  type="text" placeholder="Insira uma tarefa...">
+			  </div>
+			  <div class="col-md-3">
+				<span onclick="novaTarefa()" class="btn btn-primary btn-lg btnTarefa">Adicionar</span>
+			  </div>
+			</div>
+			<div class="row">
+				<ul class="col-md-offset-4 col-md-6 list-group" id="lista">
+				</ul>
+			</div>
+		</div>
+	</body>
 </html>
 
 <script type="text/javascript">
 
-  // Esconde elemento da lista quando
-  var fechar = document.getElementsByClassName("fechar");
+   // Esconde elemento da lista quando clica no 'x'
+  var btnFechar = document.getElementsByClassName("btnFechar");
   var i;
-  for (i = 0; i < fechar.length; i++) {
-    fechar[i].onclick = function() {
+  for (i = 0; i < btnFechar.length; i++) {
+    btnFechar[i].onclick = function() {
       var div = this.parentElement;
       div.style.display = "none";
     }
   }
-
   // Marcar elemento quando clicado
   var list = document.querySelector('ul');
   list.addEventListener('click', function(ev) {
@@ -86,28 +70,28 @@
       ev.target.classList.toggle('checked');
     }
   }, false);
-
-  // Adicina item na lsita
+  
+  // Adicina tarefa na lsita
   function novaTarefa() {
-    var li = document.createElement("li");
-    var inputValue = document.getElementById("txtTarefa").value;
-    var t = document.createTextNode(inputValue);
-    li.appendChild(t);
-    if (inputValue === '') {
+    var tarefa = $("#txtTarefa").val();
+    if (tarefa === '') {
       alert("Esta vazio");
     } else {
-      document.getElementById("lista").appendChild(li);
+		var t = document.createTextNode(tarefa);
+		var li = document.createElement("li");
+		li.appendChild(t);
+		$("#lista").append(li);
     }
-    document.getElementById("txtTarefa").value = "";
-
+    $("#txtTarefa").val("");
+	
     var span = document.createElement("SPAN");
-    var txt = document.createTextNode("\u00D7");
-    span.className = "fechar";
+    var txt = document.createTextNode("x");
+    span.className = "btnFechar";
     span.appendChild(txt);
     li.appendChild(span);
-
-    for (i = 0; i < fechar.length; i++) {
-      fechar[i].onclick = function() {
+	li.className = "list-group-item";
+    for (i = 0; i < btnFechar.length; i++) {
+      btnFechar[i].onclick = function() {
         var div = this.parentElement;
         div.style.display = "none";
       }
